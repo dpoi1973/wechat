@@ -1,0 +1,32 @@
+{
+  "name": "wanli-hr",
+  "dependencies": {
+    "angular-moment": "^0.10.3",
+    "angular-route": "1.5.x",
+    "angular": "1.5.x",
+    "angular-mocks": "~1.2.21",
+    "jquery": "~2.1.3",
+    "moment": "^2.12.0",
+    "angular-ui-grid": "^3.1.1",
+    "ng-file-upload": "^12.0.4",
+    "angular-bootstrap": "^1.3.2",
+    "bootstrap": "^3.3.6",
+    "ui-select": "angular-ui-select#^0.16.1",
+    "angular-sanitize": "^1.5.5",
+    "angular-animate": "^1.5.8",
+    "angular-touch": "^1.5.8"
+  },
+  "description": "wanliSalaryCalculator",
+  "main": "",
+  "authors": [
+    "ken mac <kensun117@gmail.com>"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "resolutions": {
+    "angular": "1.5.x",
+    "moment": "^2.12.0"
+  }
+}

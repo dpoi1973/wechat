@@ -1,0 +1,33 @@
+<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<h2>Template List</h2>
+<div ng-app="myApp" ng-controller="myCtrl">
+    primary_industry:
+    <select>
+        <option ng-repeat="template in template_list" value="{{template.primary_industry}}">{{template.primary_industry}}</option>
+    </select> deputy_industry:
+    <select>
+        <option ng-repeat="template in template_list" value="{{template.deputy_industry}}">{{template.deputy_industry}}</option>
+    </select>
+    <table border="1">
+        <tr>
+            <th>title</th>
+            <th>content</th>
+        </tr>
+        <tbody>
+            <tr ng-repeat="template in template_list">
+
+                <td><a href="?{{template.template_id}}">{{template.title}}</a></td>
+                <td>{{template.content}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+        var app = angular.module('myApp',[]);
+        app.controller('myCtrl',function ($scope,$http) {
+            $scope.template_list = {};
+            $http.get('/Weixinmain/getAllPrivateTemplate').success(function (res){
+                $scope.template_list = res.template_list;
+            });
+        });
+</script>

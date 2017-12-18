@@ -1,0 +1,63 @@
+<script src="/bower_components/angular/angular.js"></script>
+
+<h1 align="center">用户 openid </h1>
+<div ng-app="ui.bootstrap.demo" align="center">
+    <div ng-controller="ModalDemoCtrl as $ctrl">
+        <script type="text/ng-template" id="myModalContent.html">
+            <div class="modal-header">
+                <h3 class="modal-title" id="ModalDemoCtrl as $ctrl">I'm a modal!</h3>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <ul>
+                    <li ng-repeat="item in $ctrl.items">
+                        <a href="#" ng-click="$event.preventDefault(); $ctrl.selected.item = item.template_id">{{ item.title }}</a>
+                        <div>{{item.content}}</div>
+                    </li>
+                </ul>
+                Selected: <b>{{ $ctrl.selected.item }}</b>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
+                <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+            </div>
+        </script>
+        <table border="1" width="80%">
+            <tr>
+                <th>订阅时间</th>
+                <th>用户名</th>
+                <th>性别</th>
+                <th>城市</th>
+                <th>省份</th>
+                <th>国家</th>
+                <th>操作</th>
+            </tr>
+            <tr ng-repeat="user in users">
+                <td>
+                    {{user.subscribe_time}}
+                </td>
+                <td>
+                    {{user.nickname}}
+                </td>
+                <td>
+                    {{sex[user.sex]}}
+                </td>
+                <td>
+                    {{user.city}}
+                </td>
+                <td>
+                    {{user.province}}
+                </td>
+                <td>
+                    {{user.country}}
+                </td>
+                <td>
+                    <a type="button" class="btn btn-default" ng-click="$ctrl.open('lg')">发送模板消息</a>
+                    <div type="hidden" ng-show="$ctrl.selected">{{ $ctrl.selected }}</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script>
+    
+</script>

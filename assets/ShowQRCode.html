@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+
+<head>
+    <script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+    <script type "text/javascript" src="/js/dependencies/sails.io.js"></script>
+    <script type "text/javascript">
+        // The automatically-created socket is exposed as io.socket.
+        // Use .on() to subscribe to the 'hello' event on the client
+        io.socket.on('reglogin', function gotHelloMessage(data) {
+            console.log('Socket `' + data.id + '` joined the party!');
+        });
+        // Use .get() to contact the server
+        io.socket.get('/socketUtils/reglogin', function gotResponse(body, response) {
+            console.log('Server responded with status code ' + response.statusCode + ' and data: ', body);
+        })
+    </script>
+    <title>显示二维码</title>
+</head>
+
+<body>
+    <h2>显示二维码</h2>
+    <div ng-app="myApp" ng-controller="myCtrl">
+        <img src="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket={{ticket}}">
+    </div>
+</body>
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope, $http) {
+        $scope.ticket = "";
+        $http.get('/Weixinmain/createTmpQRCode').success(function(res) {
+            $scope.ticket = res.ticket;
+        });
+    });
+</script>
+
+</html>
