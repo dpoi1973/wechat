@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>万历报关系统</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <style>
+        *{
+            padding:0;
+            margin: 0;
+        }
+        body,html{
+            width: 100%;
+            height: 100%;
+            background: #F2F2F4;
+            font-size: 18px;
+            overflow: hidden;
+        }
+        .main_box{
+            width: 100%;
+            height: 100%;
+        }
+        .close{
+            height:50px;
+            line-height: 50px;
+            border-bottom: 1px solid #cecece;
+        }
+        .close a{
+            padding-left: 10px;
+            color: #18A906;
+        }
+        .word{
+            margin-top: 100px;
+            text-align: center;
+            color: #ff3333;
+            font-weight:bold;
+        }
+        .cancle_login,.login{
+            text-align: center;
+        }
+        button{
+            height: 40px;
+            width: 180px;
+            border: 1px solid #18A906;
+            border-radius: 7px;
+            font-size: 16px;
+            color: #18A906;
+			 background: #F2F2F4;
+        }
+        button a{
+            line-height:40px;
+            width:100%;
+            height:100%;
+            display:inline-block;
+            color: #848486;
+            font-weight:bold;
+            text-decoration:none
+        }
+        .login{
+            margin-top: 120px;
+        }
+        .cancle_login{
+            margin-top: 40px;
+        }
+        .cancle_login a{
+            color: #99CC33;
+        }
+        .form-horizontal{
+            margin-top: 80px;
+            text-align: center;
+        }
+        .input-xlarge{
+            padding-left: 5px;
+            font-size: 16px;
+            width: 220px;
+            height: 38px;
+            vertical-align: middle;
+            border-style: ridge;
+            border-radius: 5px;
+            color: #969292;
+            border: 1px solid #18A906;
+        }
+		.controls{
+			margin:5px;
+		}
+    </style>
+</head>
+<body>
+<div class="main_box">
+    <div class="word">
+        请登录业务系统账号来绑定微信
+    </div>
+        <form class="form-horizontal" method="get" action="loginHandle">
+                <div class="control-group">
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" id="username" name="username" placeholder="账号">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <input type="password" class="input-xlarge" id="password" name="password"  placeholder="密码">
+                    </div>
+                </div>
+                <div>
+                    <input type="hidden" id="userid" name="userid" value="<%= userid %>"/>
+                    <input type="hidden" id="session" name="session" value="<%= session %>"/>
+                </div>
+                <div class="login">
+                    <button type="submit">登录</button>
+                </div>
+        </form>
+    <div class="cancle_login">
+        <a href="#" onclick="WeixinJSBridge.call('closeWindow');">取消</a>
+    </div>
+</div>
+</body>
+</html>

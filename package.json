@@ -1,46 +1,25 @@
 {
-  "name": "weixinClient",
-  "private": true,
-  "version": "0.0.0",
-  "description": "a Sails application",
-  "keywords": [],
-  "dependencies": {
-    "ejs": "2.3.4",
-    "express-xml-bodyparser": "^0.3.0",
-    "grunt": "0.4.5",
-    "grunt-contrib-clean": "0.6.0",
-    "grunt-contrib-coffee": "0.13.0",
-    "grunt-contrib-concat": "0.5.1",
-    "grunt-contrib-copy": "0.5.0",
-    "grunt-contrib-cssmin": "0.9.0",
-    "grunt-contrib-jst": "0.6.0",
-    "grunt-contrib-less": "1.1.0",
-    "grunt-contrib-uglify": "0.7.0",
-    "grunt-contrib-watch": "0.5.3",
-    "grunt-sails-linker": "~0.10.1",
-    "grunt-sync": "0.2.4",
-    "include-all": "~0.1.6",
-    "rc": "1.0.1",
-    "request": "^2.74.0",
-    "sails": "~0.12.3",
-    "sails-disk": "~0.10.9",
-    "sails-mysql": "^0.11.5",
-    "skipper": "^0.6.4",
-    "validator": "^5.5.0",
-    "wechat": "^2.0.3",
-    "wechat-api": "^1.28.0",
-    "wechat-enterprise": "^0.1.1",
-    "xml2js": "^0.4.17"
-  },
-  "scripts": {
-    "debug": "node debug app.js",
-    "start": "node app.js"
-  },
+  "name": "wechat",
+  "version": "1.0.0",
+  "description": "",
   "main": "app.js",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.1",
+    "ejs": "^2.5.5",
+    "method-override": "^2.3.8",
+    "node-schedule": "^1.2.4",
+    "request": "^2.81.0",
+    "wechat-enterprise": "^0.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "repository": {
     "type": "git",
-    "url": "git://github.com/kensun/weixinClient.git"
+    "url": "git@192.168.0.219:jiangh/WechatLoopBack.git"
   },
-  "author": "kensun",
-  "license": ""
+  "author": "",
+  "license": "ISC"
 }

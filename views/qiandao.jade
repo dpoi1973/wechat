@@ -1,0 +1,141 @@
+//
+   Created by zp on 2015/10/14. 签到签退
+extends ../../layout
+block content
+
+    if miansaomaflag&&!yaoyiyaoticket
+        //是免扫码签到并且不是,则需要百度地图摇一摇
+        script(type='text/javascript',src='http://api.map.baidu.com/api?v=2.0&ak=yie3FVmypw4AoyEcKUs6byF1')
+    script(type='text/javascript',src='/javascripts/moment.min.js')
+    form(action="signinout",target="_self",method="post",enctype="application/x-www-form-urlencoded",class="")
+        div(class="container")
+            div(class="row text-center")
+                label(style='letter-spacing:1px;font-size:18px;color:#2E61BC') #{oauser.empname} #{result.today} 签到/签退
+            div(class="row text-center")
+                span(style='letter-spacing:1px;font-size:11px;color:#2E61BC')  服务器时间
+                    label(id='lblservertime') #{serverdate.split(' ')[1]}
+            -if(result.type=='1'){
+                div(class="row text-center")
+                    label(style='letter-spacing:1px;font-size:18px;color:#2E61BC') 您今天尚未签到
+                        a(href='#',class="text-danger ",data-submit,style='display:none') 点我签到
+            -}else if (result.type=="2"){
+                div(class="row text-center")
+                    label(style='letter-spacing:1px;font-size:18px;color:#2E61BC') 您今天的签到时间 #{result.returntodaysignintime}
+                div(class="row text-center")
+                    label(style='letter-spacing:1px;font-size:18px;color:#2E61BC') 可以进行签退
+                        a(href='#',class="text-danger",data-submit,style='display:none') 点我签退
+            -}else if(result.type=='3'){
+                div(class="row text-center ")
+                    label(style='letter-spacing:1px;font-size:13px;',class='text-success') 您今天已经完成签到/签退!
+                div(class="row text-center")
+                    label(style='letter-spacing:1px;font-size:18px;color:#2E61BC') 您今天的签到时间 #{result.returntodaysignintime}
+                div(class="row text-center")
+                    label(style='letter-spacing:1px;font-size:18px;color:#2E61BC') 您今天的签退时间 #{result.returntodaysignouttime}
+
+            -}
+            -if(jsconfig.debug){
+                div(id="positiontext")
+            -}
+            div(class="row text-center")
+                div(id="allmap",style='width:100%;height:200px')
+        input(type='hidden',id='position',name='position',value="")
+        input(type='hidden',id='today',name='today',value='#{result.today}')
+        input(type='hidden',id='type',name='type',value='#{result.type}')
+        input(type='hidden',id='qrcoderesult',name='qrcoderesult',value='')
+        input(type='hidden',id='yaoyiyaoticket',name='yaoyiyaoticket',value='#{yaoyiyaoticket}')
+    script(type='text/javascript').
+        var time = moment("#{serverdate}")
+        window.setInterval(function(){
+            time = time.add(1,'s')
+            $("#lblservertime").text(time.format('HH:mm:ss'))
+        },1000);
+
+    if  miansaomaflag && !yaoyiyaoticket
+        //如果是免扫码并且不是摇一摇
+        script(type='text/javascript').
+            window.onerror = function (a, b, c) {
+                a = a
+                alert('获取位置失败或者网络异常!重新加载')
+                location.reload(true)
+            }
+            // 百度地图API功能
+            var map = new BMap.Map("allmap");
+            var point = new BMap.Point(116.331398, 39.897445);
+            map.centerAndZoom(point, 12);
+            function getBaiduMap() {
+                var geolocation = new BMap.Geolocation();
+                geolocation.getCurrentPosition(function (r) {
+                    if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                        var mk = new BMap.Marker(r.point);
+                        map.addOverlay(mk);
+                        map.panTo(r.point);
+                        var city = r.address.city || ""
+                        var district = r.address.district || ""
+                        var shreet = r.address.street || ""
+                        var street_number = r.address.street_number || ""
+                        var message = "纬度:" + r.point.lat + ',经度:' + r.point.lng
+                        message += ",城市:" + city
+                        message += ",区(镇):" + district
+                        message += ",街道:" + shreet
+                        message += ",号:" + street_number
+                        message+="。百度签到";
+                        $("#position").val(message)
+                        $("#positiontext").text(message)
+                        $("[data-submit]").show()
+                        //    alert(JSON.stringify( r))
+                    }
+                    else {
+                        alert('坐标获取出错!' + this.getStatus());
+                        location.reload(true)
+                    }
+                }, {enableHighAccuracy: true})
+            }
+            getBaiduMap()
+            $("[data-submit]").click(function () {
+                $("form").submit()
+            })
+    else if yaoyiyaoticket
+        //如果是摇一摇
+        script(type='text/javascript').
+            $("[data-submit]").show()
+            $("[data-submit]").click(function () {
+                $("form").submit()
+             })
+
+    else if !miansaomaflag
+        //如果是扫码签到
+        script(type='text/javascript').
+            wx.config({
+                debug: #{jsconfig.debug}, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: '#{jsconfig.appId}', // 必填，企业号的唯一标识，此处填写企业号corpid
+                timestamp: #{jsconfig.timestamp}, // 必填，生成签名的时间戳
+                nonceStr: '#{jsconfig.nonceStr}', // 必填，生成签名的随机串
+                signature: '#{jsconfig.signature}',// 必填，签名，见附录1
+                jsApiList: #{jsconfig.jsApiList}  // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            });
+            wx.ready(function () {
+                $("[data-submit]").show()
+                $("[data-submit]").click(function () {
+                    wx.scanQRCode({
+                        desc: 'scanQRCode desc',
+                        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                        scanType: ["qrCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                        success: function (res) {
+                            var result = res.resultStr
+                            $("#qrcoderesult").val(result)
+                            $.isLoading()
+                            window.setTimeout(function () {
+                                $("form").submit()
+                            }, 1000)
+
+                        },
+                        error: function () {
+
+                        },
+                        cancel: function () {
+
+                        }
+                    })
+                })
+            })
+
